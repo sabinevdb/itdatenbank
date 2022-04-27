@@ -128,6 +128,7 @@ class Komponente(models.Model):
 
 
 class Mitarbeiter(models.Model):
+    id = models.IntegerField(primary_key=True)
     nachname = models.TextField()
     vorname = models.TextField()
     kontotyp = models.IntegerField(blank=True, null=True)

@@ -1,0 +1,9 @@
+<div class="main">
+
+    {% for mitarbeiter in dataset %}
+
+      <h2><a href="{% url 'mitarbeiter_detail' pk=mitarbeiter.pk %}">{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</a></h2>
+  
+    {% endfor %}
+
+</div>
