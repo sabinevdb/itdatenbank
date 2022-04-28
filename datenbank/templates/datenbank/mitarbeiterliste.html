@@ -1,9 +1,13 @@
-<div class="main">
-
+{% extends 'datenbank/base.html' %}
+<a href="{% url 'mitarbeiter_neu' %}" class="top-menu">
+    {% include './icons/file-earmark-plus.svg' %}
+</a>
+  {% block content %}
     {% for mitarbeiter in dataset %}
 
       <h2><a href="{% url 'mitarbeiter_detail' pk=mitarbeiter.pk %}">{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</a></h2>
-  
+
     {% endfor %}
 
-</div>
+    <a href="{% url 'startseite' %}">Home</a>
+  {% endblock %}

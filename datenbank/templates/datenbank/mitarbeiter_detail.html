@@ -1,7 +1,22 @@
 {% block content %}
     <article class="mitarbeiter">
 
-        <h2>{{ mitarbeiter.nachname }}</h2>
-  
+        <h1>{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</h1>
+        <p>Kontotyp:{{ mitarbeiter.kontotyp }}</p>
+        <p>Titel:{{ mitarbeiter.titel }}</p>
+        <p>Mailadresse:{{ mitarbeiter.mailadresse }}</p>
+        <p>Telefonnummer:{{ mitarbeiter.telefonnummer }}</p>
+        <p>Etage:{{ mitarbeiter.etage }}</p>
+        <p>Raum:{{ mitarbeiter.raum }}</p>
+        <p>Standardpasswort:{{ mitarbeiter.standardpasswort }}</p>
+        <p>Serverpasswort:{{ mitarbeiter.serverpasswort }}</p>
+        <p>Adminkonto:{{ mitarbeiter.adminkonto }}</p>
+        <p>VPN:{{ mitarbeiter.vpn }}</p>
+        <p>Eintrittsdatum:{{ mitarbeiter.eintrittsdatum }}</p>
+        <p>Austrittsdatum:{{ mitarbeiter.austrittsdatum }}</p>
+        <p>Betreuergruppe:{{ mitarbeiter.betreuergruppe }}</p>
+        <p>Bemerkungen:{{ mitarbeiter.bemerkungen }}</p>
+        <p>Konten:{{ mitarbeiter.konten }}</p>
+
     </article>
 {% endblock %}
