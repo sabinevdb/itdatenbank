@@ -3,6 +3,7 @@ from django.http import HttpResponse
 # relative import of forms
 from .models import Mitarbeiter
 from .forms import MitarbeiterForm
+from django.shortcuts import redirect
 
 # Create your views here.
 def mitarbeiter(request):
@@ -24,5 +25,12 @@ def startseite(request):
     return render(request, 'datenbank/startseite.html', {})
 
 def mitarbeiter_neu(request):
-    form = MitarbeiterForm()
+    if request.method == "POST":
+        form = MitarbeiterForm(request.POST)
+        if form.is_valid():
+            mitarbeiter = form.save(commit=False)
+            mitarbeiter.save()
+            return redirect('mitarbeiter_detail', pk=mitarbeiter.pk)
+    else:
+        form = MitarbeiterForm()
     return render(request, 'datenbank/mitarbeiter_edit.html', {'form': form})

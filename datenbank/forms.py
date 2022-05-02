@@ -5,4 +5,4 @@ class MitarbeiterForm(forms.ModelForm):
 
     class Meta:
         model = Mitarbeiter
-        fields = ('vorname', 'nachname',)
+        fields = ('vorname', 'nachname', 'kontotyp', 'titel', 'mailadresse', 'telefonnummer', 'etage', 'raum', 'serverpasswort', 'adminkonto', 'vpn', 'eintrittsdatum', 'austrittsdatum', 'betreuergruppe', 'bemerkungen', 'konten')
