@@ -1,0 +1,13 @@
+{% extends 'datenbank/base.html' %}
+{% load static %}
+
+{% block content %}
+  <a href="{% url 'asset_neu' %}">Neues Asset</a>
+
+  {% for asset in dataset %}
+    <article class="asset">
+        <h2><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.bestellnummer }}</a></h2>
+    </article>
+  {% endfor %}
+  <a href="{% url 'startseite' %}">Home</a>
+{% endblock %}

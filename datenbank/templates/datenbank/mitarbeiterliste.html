@@ -1,14 +1,13 @@
-{% load static %}
 {% extends 'datenbank/base.html' %}
-<a href="{% url 'mitarbeiter_neu' %}" class="top-menu">
-    {% include './icons/file-earmark-plus.svg' %}
-</a>
-  {% block content %}
-    {% for mitarbeiter in dataset %}
+{% load static %}
 
-      <h2><a href="{% url 'mitarbeiter_detail' pk=mitarbeiter.pk %}">{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</a></h2>
+{% block content %}
+  <a href="{% url 'mitarbeiter_neu' %}">Neuer Mitarbeiter</a>
 
-    {% endfor %}
-
-    <a href="{% url 'startseite' %}">Home</a>
-  {% endblock %}
+  {% for mitarbeiter in dataset %}
+    <article class="mitarbeiter">
+        <h2><a href="{% url 'mitarbeiter_detail' pk=mitarbeiter.pk %}">{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</a></h2>
+    </article>
+  {% endfor %}
+  <a href="{% url 'startseite' %}">Home</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'datenbank/base.html' %}
+
+{% block content %}
+    <article class="asset">
+          <aside class="actions">
+            <a class="btn btn-default" href="{% url 'asset_edit' pk=asset.pk %}">
+              {% include './icons/pencil-fill.svg' %}
+            </a>
+        </aside>
+
+        <h1>{{ asset.bestellnummer }}</h1>
+        <p>Discriminator:{{ asset.discriminator }}</p>
+        <p>Bestellnummer:{{ asset.bestellnummer }}</p>
+        <p>Hersteller:{{ asset.hersteller }}</p>
+        <p>Händler:{{ asset.haendler }}</p>
+        <p>Raum:{{ asset.raum }}</p>
+        <p>Bemerkung:{{ asset.bemerkung }}</p>
+        <p>Seriennummer:{{ asset.seriennummer }}</p>
+        <p>Mitarbeiter:{{ asset.mitarbeiterid }}</p>
+
+    </article>
+{% endblock %}
