@@ -1,9 +1,12 @@
 {% extends 'datenbank/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <h2>Neuer Mitarbeiter</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }} </br>
+    <button type="submit" class="btn btn-success">Speichern</button>
+  </form>
+  <a href="{% url 'startseite' %}">Home</a>
 {% endblock %}

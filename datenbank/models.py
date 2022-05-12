@@ -8,17 +8,19 @@ from django.utils import timezone
 class Asset(models.Model):
     discriminator = models.CharField(max_length=50, blank=True, null=True)
     bestellnummer = models.IntegerField(blank=True, null=True)
-    hersteller = models.TextField(blank=True, null=True)
-    haendler = models.TextField(blank=True, null=True)
-    raum = models.IntegerField(blank=True, null=True)
+    hersteller = models.CharField(max_length=130, blank=True, null=True)
+    haendler = models.CharField(max_length=130, blank=True, null=True)
+    raum = models.IntegerField(max_length=50, blank=True, null=True)
     bemerkung = models.TextField(blank=True, null=True)
-    seriennummer = models.TextField(blank=True, null=True)
+    seriennummer = models.CharField(max_length=130, blank=True, null=True)
     mitarbeiterid = models.ForeignKey('Mitarbeiter', models.DO_NOTHING, db_column='mitarbeiterid', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'asset'
 
+    def __str__ (self):
+        return self.discriminator + ', ' + self.bestellnummer
 
 class Controller(models.Model):
     id = models.OneToOneField('Komponente', models.DO_NOTHING, db_column='id', primary_key=True)
@@ -128,29 +130,39 @@ class Komponente(models.Model):
 
 
 class Mitarbeiter(models.Model):
-    nachname = models.TextField()
-    vorname = models.TextField()
-    kontotyp = models.IntegerField(blank=True, null=True)
-    titel = models.TextField(blank=True, null=True)
+
+    class KontoTyp(models.TextChoices):
+        NNAKTIV = 1, 'Noch nicht aktiv'
+        AKTIV = 2, 'Aktiv'
+        AUSGESCHIEDEN = 3, 'Ausgeschieden'
+        EXTERN = 4, 'Extern'
+
+    nachname = models.CharField(max_length=130)
+    vorname = models.CharField(max_length=130)
+    # kontotyp = models.IntegerField(blank=True, null=True)
+    kontotyp = models.IntegerField(blank=True, null=True, choices=KontoTyp.choices, default=KontoTyp.NNAKTIV)
+    titel = models.CharField(max_length=130, blank=True, null=True)
     mailadresse = models.CharField(unique=True, max_length=255, blank=True, null=True)
     telefonnummer = models.CharField(max_length=20, blank=True, null=True)
-    etage = models.TextField(blank=True, null=True)
-    raum = models.IntegerField(blank=True, null=True)
-    standardpasswort = models.BinaryField(blank=True, null=True)
+    etage = models.CharField(max_length=20, blank=True, null=True)
+    raum = models.IntegerField(max_length=20, blank=True, null=True)
+    standardpasswort = models.BinaryField(max_length=20, blank=True, null=True)
     standardpasswortgesetzt = models.BooleanField(blank=True, null=True)
-    serverpasswort = models.TextField(blank=True, null=True)
-    adminkonto = models.TextField(blank=True, null=True)
+    serverpasswort = models.CharField(max_length=20, blank=True, null=True)
+    adminkonto = models.CharField(max_length=20, blank=True, null=True)
     vpn = models.BooleanField(blank=True, null=True)
     eintrittsdatum = models.DateField(blank=True, null=True)
     austrittsdatum = models.DateField(blank=True, null=True)
-    betreuergruppe = models.TextField(blank=True, null=True)
+    betreuergruppe = models.CharField(max_length=130, blank=True, null=True)
     bemerkungen = models.TextField(blank=True, null=True)
-    konten = models.TextField(blank=True, null=True)
+    konten = models.CharField(max_length=130, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'mitarbeiter'
 
+    def __str__ (self):
+        return self.nachname + ', ' + self.vorname
 
 class Monitor(models.Model):
     id = models.OneToOneField(Hardware, models.DO_NOTHING, db_column='id', primary_key=True)

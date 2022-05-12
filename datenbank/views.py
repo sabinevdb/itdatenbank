@@ -82,7 +82,7 @@ def asset_edit(request, pk):
         if form.is_valid():
             asset = form.save(commit=False)
             asset.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('asset_detail', pk=asset.pk)
     else:
         form = AssetForm(instance=asset)
     return render(request, 'datenbank/asset_edit.html', {'form': form})

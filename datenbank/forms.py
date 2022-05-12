@@ -8,9 +8,10 @@ class MitarbeiterForm(forms.ModelForm):
         model = Mitarbeiter
         fields = ('vorname', 'nachname', 'kontotyp', 'titel', 'mailadresse', 'telefonnummer', 'etage', 'raum', 'serverpasswort', 'adminkonto', 'vpn', 'eintrittsdatum', 'austrittsdatum', 'betreuergruppe', 'bemerkungen', 'konten')
 
+        eintrittsdatum = forms.DateInput()
 
 class AssetForm(forms.ModelForm):
 
     class Meta:
         model = Asset
-        fields = ('bestellnummer', 'hersteller')
+        fields = ('discriminator', 'bestellnummer', 'hersteller', 'haendler', 'raum', 'bemerkung', 'seriennummer', 'mitarbeiterid')
