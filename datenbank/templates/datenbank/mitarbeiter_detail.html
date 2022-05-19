@@ -2,11 +2,8 @@
 
 {% block content %}
     <article class="mitarbeiter">
-          <aside class="actions">
-            <a class="btn btn-default" href="{% url 'mitarbeiter_edit' pk=mitarbeiter.pk %}">
-              {% include './icons/pencil-fill.svg' %}
-            </a>
-        </aside>
+
+        <a href="{% url 'startseite' %}">Home</a><br><br>
 
         <h1>{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</h1>
         <p>Kontotyp:{{ mitarbeiter.kontotyp }}</p>
@@ -26,5 +23,9 @@
         <p>Konten:{{ mitarbeiter.konten }}</p>
 
     </article>
-    <a href="{% url 'startseite' %}">Home</a>
+    <aside class="actions">
+        <a class="btn btn-default" href="{% url 'mitarbeiter_edit' pk=mitarbeiter.pk %}">
+          {% include './icons/pencil-fill.svg' %}
+        </a>
+    </aside>
 {% endblock %}

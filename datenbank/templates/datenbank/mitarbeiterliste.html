@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<a href="{% url 'startseite' %}">Home</a><br><br>
   <a href="{% url 'mitarbeiter_neu' %}">Neuer Mitarbeiter</a>
 
   {% for mitarbeiter in dataset %}
@@ -9,5 +10,4 @@
         <h2><a href="{% url 'mitarbeiter_detail' pk=mitarbeiter.pk %}">{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</a></h2>
     </article>
   {% endfor %}
-  <a href="{% url 'startseite' %}">Home</a>
 {% endblock %}

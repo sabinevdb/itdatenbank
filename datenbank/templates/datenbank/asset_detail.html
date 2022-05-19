@@ -1,12 +1,8 @@
 {% extends 'datenbank/base.html' %}
 
 {% block content %}
-    <article class="asset">
-          <aside class="actions">
-            <a class="btn btn-default" href="{% url 'asset_edit' pk=asset.pk %}">
-              {% include './icons/pencil-fill.svg' %}
-            </a>
-        </aside>
+<a href="{% url 'startseite' %}">Home</a><br><br>
+      <article class="asset">
 
         <h1>{{ asset.bestellnummer }}</h1>
         <p>Discriminator:{{ asset.discriminator }}</p>
@@ -19,5 +15,11 @@
         <p>Mitarbeiter:{{ asset.mitarbeiterid }}</p>
 
     </article>
-    <a href="{% url 'startseite' %}">Home</a>
+
+    <aside class="actions">
+      <a class="btn btn-default" href="{% url 'asset_edit' pk=asset.pk %}">
+        {% include './icons/pencil-fill.svg' %}
+      </a>
+    </aside>
+
 {% endblock %}

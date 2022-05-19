@@ -14,4 +14,4 @@ class AssetForm(forms.ModelForm):
 
     class Meta:
         model = Asset
-        fields = ('discriminator', 'bestellnummer', 'hersteller', 'haendler', 'raum', 'bemerkung', 'seriennummer', 'mitarbeiterid')
+        fields = ('discriminator', 'bestellnummer', 'hersteller', 'haendler', 'raum', 'bemerkung', 'seriennummer', 'mitarbeiterid', 'eventid')

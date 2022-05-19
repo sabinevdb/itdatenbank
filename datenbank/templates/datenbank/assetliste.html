@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block content %}
+<a href="{% url 'startseite' %}">Home</a><br><br>
   <a href="{% url 'asset_neu' %}">Neues Asset</a>
 
   {% for asset in dataset %}
     <article class="asset">
-        <h2><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.bestellnummer }} {{ asset.discriminator }} {{ asset.mitarbeiterid }}</a></h2>
+        <h2><a href="{% url 'asset_detail' pk=asset.pk %}">{{ asset.bestellnummer }} {{ asset.discriminator }} {{ asset.mitarbeiterid }} {{ asset.event }}</a></h2>
     </article>
   {% endfor %}
-  <a href="{% url 'startseite' %}">Home</a>
+
 {% endblock %}

@@ -6,14 +6,19 @@ from django.utils import timezone
 
 # Create your models here.
 class Asset(models.Model):
+
     discriminator = models.CharField(max_length=50, blank=True, null=True)
     bestellnummer = models.IntegerField(blank=True, null=True)
     hersteller = models.CharField(max_length=130, blank=True, null=True)
     haendler = models.CharField(max_length=130, blank=True, null=True)
-    raum = models.IntegerField(max_length=50, blank=True, null=True)
+    raum = models.CharField(max_length=50, blank=True, null=True)
     bemerkung = models.TextField(blank=True, null=True)
     seriennummer = models.CharField(max_length=130, blank=True, null=True)
     mitarbeiterid = models.ForeignKey('Mitarbeiter', models.DO_NOTHING, db_column='mitarbeiterid', blank=True, null=True)
+    #eventid = models.ForeignKey('Event', models.DO_NOTHING, db_column='assetid', blank=True, null=True)
+    #eventid = models.ForeignKey('Event', on_delete=models.CASCADE)
+    eventid = models.ManyToManyField('Event', db_column='assetid')
+    #eventid = models.ManyToManyField('Event', through='EventQuantity')
 
     class Meta:
         managed = False
@@ -21,6 +26,10 @@ class Asset(models.Model):
 
     def __str__ (self):
         return self.discriminator + ', ' + self.bestellnummer
+
+class EventQuantity(models.Model):
+    event = models.ForeignKey('Event', on_delete=models.CASCADE)
+    asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
 
 class Controller(models.Model):
     id = models.OneToOneField('Komponente', models.DO_NOTHING, db_column='id', primary_key=True)
@@ -71,14 +80,29 @@ class Dvdlaufwerk(models.Model):
 
 
 class Event(models.Model):
-    event = models.IntegerField(blank=True, null=True)
+
+    class EventTyp(models.TextChoices):
+        GEPLANT = 1, 'geplant'
+        BESTELLT = 2, 'bestellt'
+        GELIEFERT = 3, 'geliefert'
+        UEBERGEBEN = 4, 'uebergeben'
+        ZURUECKBEKOMMEN = 5, 'zurueckbekommen'
+        AUSGELIEHEN = 6, 'ausgeliehen'
+        VERWERTET = 7, 'verwertet'
+        VERSCHROTTET = 8, 'verschrottet'
+
+    event = models.IntegerField(blank=True, null=True, choices=EventTyp.choices, default=EventTyp.GEPLANT)
+    #event = models.IntegerField(blank=True, null=True)
     datum = models.DateTimeField(blank=True, null=True)
-    assetid = models.ForeignKey(Asset, models.DO_NOTHING, db_column='assetid', blank=True, null=True)
+    #assetid = models.ForeignKey(Asset, models.DO_NOTHING, db_column='assetid', blank=True, null=True)
+    assetid = models.ForeignKey('Asset', models.DO_NOTHING, db_column='assetid', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'event'
 
+    def __str__ (self):
+        return self.event + ', ' + self.datium
 
 class Grafikkarte(models.Model):
     id = models.OneToOneField('Komponente', models.DO_NOTHING, db_column='id', primary_key=True)
@@ -145,7 +169,7 @@ class Mitarbeiter(models.Model):
     mailadresse = models.CharField(unique=True, max_length=255, blank=True, null=True)
     telefonnummer = models.CharField(max_length=20, blank=True, null=True)
     etage = models.CharField(max_length=20, blank=True, null=True)
-    raum = models.IntegerField(max_length=20, blank=True, null=True)
+    raum = models.CharField(max_length=20, blank=True, null=True)
     standardpasswort = models.BinaryField(max_length=20, blank=True, null=True)
     standardpasswortgesetzt = models.BooleanField(blank=True, null=True)
     serverpasswort = models.CharField(max_length=20, blank=True, null=True)
