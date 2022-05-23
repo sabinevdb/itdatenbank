@@ -17,8 +17,10 @@ class Asset(models.Model):
     mitarbeiterid = models.ForeignKey('Mitarbeiter', models.DO_NOTHING, db_column='mitarbeiterid', blank=True, null=True)
     #eventid = models.ForeignKey('Event', models.DO_NOTHING, db_column='assetid', blank=True, null=True)
     #eventid = models.ForeignKey('Event', on_delete=models.CASCADE)
-    eventid = models.ManyToManyField('Event', db_column='assetid')
+    #eventid = models.ManyToManyField('Event', db_column='assetid')
     #eventid = models.ManyToManyField('Event', through='EventQuantity')
+    #event = models.CharField(max_length=50, blank=True, null=True)
+    events =  models.ManyToManyField('Event')
 
     class Meta:
         managed = False
@@ -27,9 +29,6 @@ class Asset(models.Model):
     def __str__ (self):
         return self.discriminator + ', ' + self.bestellnummer
 
-class EventQuantity(models.Model):
-    event = models.ForeignKey('Event', on_delete=models.CASCADE)
-    asset = models.ForeignKey('Asset', on_delete=models.CASCADE)
 
 class Controller(models.Model):
     id = models.OneToOneField('Komponente', models.DO_NOTHING, db_column='id', primary_key=True)
@@ -95,14 +94,16 @@ class Event(models.Model):
     #event = models.IntegerField(blank=True, null=True)
     datum = models.DateTimeField(blank=True, null=True)
     #assetid = models.ForeignKey(Asset, models.DO_NOTHING, db_column='assetid', blank=True, null=True)
-    assetid = models.ForeignKey('Asset', models.DO_NOTHING, db_column='assetid', blank=True, null=True)
+    #assetid = models.ForeignKey('Asset', models.DO_NOTHING, db_column='assetid', blank=True, null=True)
+    #asset = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='asset_event_set')
+    assetid = models.ManyToManyField('Asset', db_column='assetid')
 
     class Meta:
         managed = False
         db_table = 'event'
 
     def __str__ (self):
-        return self.event + ', ' + self.datium
+        return str(self.event) + ', ' + str(self.datum)
 
 class Grafikkarte(models.Model):
     id = models.OneToOneField('Komponente', models.DO_NOTHING, db_column='id', primary_key=True)
@@ -180,6 +181,7 @@ class Mitarbeiter(models.Model):
     betreuergruppe = models.CharField(max_length=130, blank=True, null=True)
     bemerkungen = models.TextField(blank=True, null=True)
     konten = models.CharField(max_length=130, blank=True, null=True)
+    assets =  models.ManyToManyField(Asset)
 
     class Meta:
         managed = False

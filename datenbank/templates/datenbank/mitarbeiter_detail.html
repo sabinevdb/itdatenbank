@@ -1,31 +1,13 @@
 {% extends 'datenbank/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <article class="mitarbeiter">
-
-        <a href="{% url 'startseite' %}">Home</a><br><br>
-
-        <h1>{{ mitarbeiter.nachname }}, {{ mitarbeiter.vorname }}</h1>
-        <p>Kontotyp:{{ mitarbeiter.kontotyp }}</p>
-        <p>Titel:{{ mitarbeiter.titel }}</p>
-        <p>Mailadresse:{{ mitarbeiter.mailadresse }}</p>
-        <p>Telefonnummer:{{ mitarbeiter.telefonnummer }}</p>
-        <p>Etage:{{ mitarbeiter.etage }}</p>
-        <p>Raum:{{ mitarbeiter.raum }}</p>
-        <p>Standardpasswort:{{ mitarbeiter.standardpasswort }}</p>
-        <p>Serverpasswort:{{ mitarbeiter.serverpasswort }}</p>
-        <p>Adminkonto:{{ mitarbeiter.adminkonto }}</p>
-        <p>VPN:{{ mitarbeiter.vpn }}</p>
-        <p>Eintrittsdatum:{{ mitarbeiter.eintrittsdatum }}</p>
-        <p>Austrittsdatum:{{ mitarbeiter.austrittsdatum }}</p>
-        <p>Betreuergruppe:{{ mitarbeiter.betreuergruppe }}</p>
-        <p>Bemerkungen:{{ mitarbeiter.bemerkungen }}</p>
-        <p>Konten:{{ mitarbeiter.konten }}</p>
-
-    </article>
-    <aside class="actions">
-        <a class="btn btn-default" href="{% url 'mitarbeiter_edit' pk=mitarbeiter.pk %}">
-          {% include './icons/pencil-fill.svg' %}
-        </a>
-    </aside>
+<a href="{% url 'startseite' %}">Home</a><br><br>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }} </br>
+    <button type="submit" class="btn btn-success">Speichern</button>
+  </form>
+  <a href="{% url 'startseite' %}">Home</a>
 {% endblock %}

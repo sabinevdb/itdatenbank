@@ -4,7 +4,6 @@
 
 {% block content %}
 <a href="{% url 'startseite' %}">Home</a><br><br>
-    <h2>Neues Asset</h2>
     <form method="post" novalidate>
       {% csrf_token %}
       {{ form|crispy }} </br>

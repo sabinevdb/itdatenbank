@@ -27,7 +27,16 @@ def mitarbeiterliste(request):
 
 def mitarbeiter_detail(request, pk):
     mitarbeiter = get_object_or_404(Mitarbeiter, pk=pk)
-    return render(request, 'datenbank/mitarbeiter_detail.html', {'mitarbeiter': mitarbeiter})
+    if request.method == "POST":
+        form = MitarbeiterForm(request.POST, instance=mitarbeiter)
+        if form.is_valid():
+            mitarbeiter = form.save(commit=False)
+            mitarbeiter.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = MitarbeiterForm(instance=mitarbeiter)
+    return render(request, 'datenbank/mitarbeiter_edit.html', {'form': form})
+
 
 def mitarbeiter_neu(request):
     if request.method == "POST":
@@ -61,8 +70,18 @@ def assetliste(request):
     return render(request, "datenbank/assetliste.html", context)
 
 def asset_detail(request, pk):
+    #asset = get_object_or_404(Asset, pk=pk)
+    #return render(request, 'datenbank/asset_detail.html', {'asset': asset})
     asset = get_object_or_404(Asset, pk=pk)
-    return render(request, 'datenbank/asset_detail.html', {'asset': asset})
+    if request.method == "POST":
+        form = AssetForm(request.POST, instance=asset)
+        if form.is_valid():
+            asset = form.save(commit=False)
+            asset.save()
+            return redirect('asset_detail', pk=asset.pk)
+    else:
+        form = AssetForm(instance=asset)
+    return render(request, 'datenbank/asset_edit.html', {'form': form})
 
 def asset_neu(request):
     if request.method == "POST":
